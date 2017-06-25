@@ -12,4 +12,9 @@ public class RootController {
     public String landingPage() {
         return "landingpage";
     }
+
+    @GetMapping("/listimages")
+    public String listImages() {
+        return "listimages";
+    }
 }
