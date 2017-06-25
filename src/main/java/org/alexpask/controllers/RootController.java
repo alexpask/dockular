@@ -13,8 +13,8 @@ public class RootController {
         return "landingpage";
     }
 
-    @GetMapping("/listimages")
+    @GetMapping("/images")
     public String listImages() {
-        return "listimages";
+        return "images";
     }
 }

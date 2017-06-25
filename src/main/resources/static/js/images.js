@@ -5,9 +5,8 @@ $(document).ready(function() {
    $.getJSON('/api/images', function(data) {
        var htmlTr = '';
        $.each(data, function(i, field) {
-          htmlTr += '<tr><td>' + field.name + '</td></tr>';
+          htmlTr += '<tr><td>' + field.name + '</td><td>' + field.tag + '</td><td>' + field.imageId + '</td><td>' + field.created + '</td><td>' + field.size + '</td></tr>';
        });
-       console.log(htmlTr);
        $('#imagetbl').append(htmlTr);
    });
 });
