@@ -9,6 +9,7 @@ import com.spotify.docker.client.messages.ImageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,17 +28,18 @@ public class StatusController {
     public List<DockerImage> images()
             throws DockerException, InterruptedException {
         final List<Image> images = docker.listImages();
-        final List<DockerImage> dkimages;
-        dkimages = images.stream()
+        final List<DockerImage> dockerImages;
+        dockerImages = images.stream()
                 .map(image -> {
                     DockerImage dockerImage = new DockerImage();
-                    dockerImage.setName(image.repoTags().get(0));
-                    dockerImage.setImageId(image.id());
-                    dockerImage.setCreated(image.created());
+                    dockerImage.setName(image.repoTags().get(0).split(":")[0]);
+                    dockerImage.setTag(image.repoTags().get(0).split(":")[1]);
+                    dockerImage.setImageId(image.id().split(":")[1]);
+                    dockerImage.setCreated(Instant.ofEpochSecond(Long.parseLong(image.created())).toString());
                     dockerImage.setSize(images.size());
                     return dockerImage;
                 }).collect(Collectors.toList());
-        return dkimages;
+        return dockerImages;
     }
 
     @GetMapping("/images/{id}")
