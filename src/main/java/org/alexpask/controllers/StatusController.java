@@ -31,9 +31,10 @@ public class StatusController {
         final List<DockerImage> dockerImages;
         dockerImages = images.stream()
                 .map(image -> {
+                    String[] repoTag = image.repoTags().get(0).split(":");
                     DockerImage dockerImage = new DockerImage();
-                    dockerImage.setName(image.repoTags().get(0).split(":")[0]);
-                    dockerImage.setTag(image.repoTags().get(0).split(":")[1]);
+                    dockerImage.setName((repoTag[0].equals("<none>")) ? "&ltnone&gt" : repoTag[0]);
+                    dockerImage.setTag((repoTag[1].equals("<none>")) ? "&ltnone&gt" : repoTag[1]);
                     dockerImage.setImageId(image.id().split(":")[1]);
                     dockerImage.setCreated(Instant.ofEpochSecond(Long.parseLong(image.created())).toString());
                     dockerImage.setSize(images.size());

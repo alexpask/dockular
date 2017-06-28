@@ -17,4 +17,7 @@ public class RootController {
     public String listImages() {
         return "images";
     }
+
+    @GetMapping("/images/{imageId}")
+    public String imageInspect() { return "imageinspect"; }
 }
