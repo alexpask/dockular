@@ -1,0 +1,8 @@
+.imageRow {
+    cursor: pointer;
+    hover
+}
+
+.imageRow:hover {
+    background-color: aqua;
+}
