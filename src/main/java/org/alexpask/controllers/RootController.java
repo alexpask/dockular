@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RootController {
     @GetMapping("/")
-    public String landingPage() {
-        return "landingpage";
+    public String Dashboard() {
+        return "dashboard";
     }
 
     @GetMapping("/images")

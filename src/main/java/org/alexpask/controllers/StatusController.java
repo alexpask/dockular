@@ -1,5 +1,6 @@
 package org.alexpask.controllers;
 
+import org.alexpask.model.DockerCount;
 import org.alexpask.model.DockerImage;
 
 import com.spotify.docker.client.DockerClient;
@@ -29,7 +30,7 @@ public class StatusController {
             throws DockerException, InterruptedException {
         final List<Image> images = docker.listImages();
         final List<DockerImage> dockerImages;
-        dockerImages = images.stream()
+        return images.stream()
                 .map(image -> {
                     String[] repoTag = image.repoTags().get(0).split(":");
                     DockerImage dockerImage = new DockerImage();
@@ -40,7 +41,6 @@ public class StatusController {
                     dockerImage.setSize(images.size());
                     return dockerImage;
                 }).collect(Collectors.toList());
-        return dockerImages;
     }
 
     @GetMapping("/images/{id}")
@@ -48,5 +48,12 @@ public class StatusController {
             throws DockerException, InterruptedException {
         ImageInfo imageInfo = docker.inspectImage("sha256:" + id);
         return imageInfo;
+    }
+
+    @GetMapping("/images/info/count")
+    public DockerCount dockerCount()
+            throws DockerException, InterruptedException {
+        final List<Image> images = docker.listImages();
+        return new DockerCount(images.size());
     }
 }
