@@ -5,5 +5,8 @@ $(document).ready(function() {
             console.log(result.imageCount);
             $("#info").html("<span> " + result.imageCount + "</span>");
         }
-    })
+    });
+    $("#info").click(function(){
+        window.location.href = '/images' ;
+    });
 })
